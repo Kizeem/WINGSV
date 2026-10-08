@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.amnezia.awg.config.BadConfigException;
 import org.amnezia.awg.config.Config;
 import org.amnezia.awg.config.InetEndpoint;
 import org.amnezia.awg.config.Interface;
@@ -192,6 +193,31 @@ public final class AmneziaStore {
             KEY_PEER_ENDPOINT.equals(key) ||
             KEY_PEER_PERSISTENT_KEEPALIVE.equals(key)
         );
+    }
+
+    /**
+     * Builds a human-readable description of an import failure. BadConfigException does not
+     * override getMessage (it is null for UNKNOWN_SECTION / UNKNOWN_ATTRIBUTE and friends), so
+     * the raw message alone shows "null". This maps the section / location / reason onto text.
+     */
+    public static String describeError(Throwable error) {
+        if (error instanceof BadConfigException) {
+            BadConfigException bad = (BadConfigException) error;
+            StringBuilder builder = new StringBuilder();
+            builder.append(bad.getReason());
+            if (bad.getLocation() != null && bad.getLocation() != BadConfigException.Location.TOP_LEVEL) {
+                builder.append(" '").append(bad.getLocation().getName()).append('\'');
+            }
+            if (bad.getSection() != null) {
+                builder.append(" in [").append(bad.getSection().getName()).append(']');
+            }
+            if (!TextUtils.isEmpty(bad.getText())) {
+                builder.append(": ").append(bad.getText());
+            }
+            return builder.toString();
+        }
+        String message = error == null ? null : error.getMessage();
+        return TextUtils.isEmpty(message) ? String.valueOf(error) : message;
     }
 
     private static StructuredConfig parseRawConfig(String rawConfig) throws Exception {
