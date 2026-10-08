@@ -13,7 +13,7 @@
 	url = https://github.com/WINGS-N/Xray-core.git
 [submodule "external/amneziawg-android"]
 	path = external/amneziawg-android
-	url = https://github.com/WINGS-N/amneziawg-android.git
+	url = https://github.com/Kizeem/amneziawg-android.git
 [submodule "external/byedpi"]
 	path = external/byedpi
 	url = https://github.com/WINGS-N/byedpi.git
