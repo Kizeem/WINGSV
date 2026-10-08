@@ -94,6 +94,15 @@ public class AmneziaSettingsFragment extends PreferenceFragmentCompat {
         bindSummary(AmneziaStore.KEY_INTERFACE_I3, false);
         bindSummary(AmneziaStore.KEY_INTERFACE_I4, false);
         bindSummary(AmneziaStore.KEY_INTERFACE_I5, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_HEADER_PROTECTION_KEY, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_CONTENT_PADDING_ADDITION, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_REKEY_AFTER_TIME, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_REKEY_TIMEOUT, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_REJECT_AFTER_TIME, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_KEEPALIVE_TIMEOUT, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_RANDOM_TRAILERS, false);
+        bindSummary(AmneziaStore.KEY_INTERFACE_DISABLE_COOKIES, false);
         bindSummary(AmneziaStore.KEY_PEER_PUBLIC_KEY, false);
         bindSummary(AmneziaStore.KEY_PEER_PRESHARED_KEY, false);
         bindIpSummary(AmneziaStore.KEY_PEER_ALLOWED_IPS, true);
@@ -175,7 +184,7 @@ public class AmneziaSettingsFragment extends PreferenceFragmentCompat {
             } catch (Exception error) {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.awg_settings_raw_apply_failed, error.getMessage()),
+                    getString(R.string.awg_settings_raw_apply_failed, AmneziaStore.describeError(error)),
                     Toast.LENGTH_SHORT
                 ).show();
                 return false;
@@ -312,6 +321,42 @@ public class AmneziaSettingsFragment extends PreferenceFragmentCompat {
             syncEditText(AmneziaStore.KEY_INTERFACE_I3, prefs.getString(AmneziaStore.KEY_INTERFACE_I3, ""));
             syncEditText(AmneziaStore.KEY_INTERFACE_I4, prefs.getString(AmneziaStore.KEY_INTERFACE_I4, ""));
             syncEditText(AmneziaStore.KEY_INTERFACE_I5, prefs.getString(AmneziaStore.KEY_INTERFACE_I5, ""));
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_HEADER_PROTECTION_KEY,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_HEADER_PROTECTION_KEY, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_CONTENT_PADDING_ADDITION,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_CONTENT_PADDING_ADDITION, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_REKEY_AFTER_TIME,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_REKEY_AFTER_TIME, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_REKEY_TIMEOUT,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_REKEY_TIMEOUT, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_REJECT_AFTER_TIME,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_REJECT_AFTER_TIME, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_KEEPALIVE_TIMEOUT,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_KEEPALIVE_TIMEOUT, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_RANDOM_TRAILERS,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_RANDOM_TRAILERS, "")
+            );
+            syncEditText(
+                AmneziaStore.KEY_INTERFACE_DISABLE_COOKIES,
+                prefs.getString(AmneziaStore.KEY_INTERFACE_DISABLE_COOKIES, "")
+            );
             syncEditText(AmneziaStore.KEY_PEER_PUBLIC_KEY, prefs.getString(AmneziaStore.KEY_PEER_PUBLIC_KEY, ""));
             syncEditText(AmneziaStore.KEY_PEER_PRESHARED_KEY, prefs.getString(AmneziaStore.KEY_PEER_PRESHARED_KEY, ""));
             syncEditText(AmneziaStore.KEY_PEER_ALLOWED_IPS, prefs.getString(AmneziaStore.KEY_PEER_ALLOWED_IPS, ""));
