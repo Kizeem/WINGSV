@@ -49,6 +49,15 @@ public final class AmneziaStore {
     public static final String KEY_INTERFACE_I3 = "pref_awg_interface_i3";
     public static final String KEY_INTERFACE_I4 = "pref_awg_interface_i4";
     public static final String KEY_INTERFACE_I5 = "pref_awg_interface_i5";
+    public static final String KEY_INTERFACE_HEADER_PROTECTION_KEY = "pref_awg_interface_header_protection_key";
+    public static final String KEY_INTERFACE_CONTENT_PADDING_ADDITION = "pref_awg_interface_content_padding_addition";
+    public static final String KEY_INTERFACE_REKEY_AFTER_TIME = "pref_awg_interface_rekey_after_time";
+    public static final String KEY_INTERFACE_REKEY_TIMEOUT = "pref_awg_interface_rekey_timeout";
+    public static final String KEY_INTERFACE_REJECT_AFTER_TIME = "pref_awg_interface_reject_after_time";
+    public static final String KEY_INTERFACE_KEEPALIVE_TIMEOUT = "pref_awg_interface_keepalive_timeout";
+    public static final String KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS = "pref_awg_interface_max_handshake_attempts";
+    public static final String KEY_INTERFACE_RANDOM_TRAILERS = "pref_awg_interface_random_trailers";
+    public static final String KEY_INTERFACE_DISABLE_COOKIES = "pref_awg_interface_disable_cookies";
     public static final String KEY_PEER_PUBLIC_KEY = "pref_awg_peer_public_key";
     public static final String KEY_PEER_PRESHARED_KEY = "pref_awg_peer_preshared_key";
     public static final String KEY_PEER_ALLOWED_IPS = "pref_awg_peer_allowed_ips";
@@ -168,6 +177,15 @@ public final class AmneziaStore {
             KEY_INTERFACE_I3.equals(key) ||
             KEY_INTERFACE_I4.equals(key) ||
             KEY_INTERFACE_I5.equals(key) ||
+            KEY_INTERFACE_HEADER_PROTECTION_KEY.equals(key) ||
+            KEY_INTERFACE_CONTENT_PADDING_ADDITION.equals(key) ||
+            KEY_INTERFACE_REKEY_AFTER_TIME.equals(key) ||
+            KEY_INTERFACE_REKEY_TIMEOUT.equals(key) ||
+            KEY_INTERFACE_REJECT_AFTER_TIME.equals(key) ||
+            KEY_INTERFACE_KEEPALIVE_TIMEOUT.equals(key) ||
+            KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS.equals(key) ||
+            KEY_INTERFACE_RANDOM_TRAILERS.equals(key) ||
+            KEY_INTERFACE_DISABLE_COOKIES.equals(key) ||
             KEY_PEER_PUBLIC_KEY.equals(key) ||
             KEY_PEER_PRESHARED_KEY.equals(key) ||
             KEY_PEER_ALLOWED_IPS.equals(key) ||
@@ -202,6 +220,18 @@ public final class AmneziaStore {
         result.i3 = iface.getSpecialJunkI3().orElse("");
         result.i4 = iface.getSpecialJunkI4().orElse("");
         result.i5 = iface.getSpecialJunkI5().orElse("");
+        result.headerProtectionKey = iface
+            .getHeaderProtectionKey()
+            .map(key -> key.toBase64())
+            .orElse("");
+        result.contentPaddingAddition = iface.getContentPaddingAddition().orElse("");
+        result.rekeyAfterTime = iface.getRekeyAfterTime().orElse("");
+        result.rekeyTimeout = iface.getRekeyTimeout().orElse("");
+        result.rejectAfterTime = iface.getRejectAfterTime().orElse("");
+        result.keepaliveTimeout = iface.getKeepaliveTimeout().orElse("");
+        result.maxHandshakeAttempts = iface.getMaxHandshakeAttempts().orElse("");
+        result.randomTrailers = iface.getRandomTrailers().orElse("");
+        result.disableCookies = iface.getDisableCookies().orElse("");
         if (!config.getPeers().isEmpty()) {
             Peer peer = config.getPeers().get(0);
             result.peerPublicKey = peer.getPublicKey().toBase64();
@@ -238,6 +268,15 @@ public final class AmneziaStore {
         editor.putString(KEY_INTERFACE_I3, config.i3);
         editor.putString(KEY_INTERFACE_I4, config.i4);
         editor.putString(KEY_INTERFACE_I5, config.i5);
+        editor.putString(KEY_INTERFACE_HEADER_PROTECTION_KEY, config.headerProtectionKey);
+        editor.putString(KEY_INTERFACE_CONTENT_PADDING_ADDITION, config.contentPaddingAddition);
+        editor.putString(KEY_INTERFACE_REKEY_AFTER_TIME, config.rekeyAfterTime);
+        editor.putString(KEY_INTERFACE_REKEY_TIMEOUT, config.rekeyTimeout);
+        editor.putString(KEY_INTERFACE_REJECT_AFTER_TIME, config.rejectAfterTime);
+        editor.putString(KEY_INTERFACE_KEEPALIVE_TIMEOUT, config.keepaliveTimeout);
+        editor.putString(KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS, config.maxHandshakeAttempts);
+        editor.putString(KEY_INTERFACE_RANDOM_TRAILERS, config.randomTrailers);
+        editor.putString(KEY_INTERFACE_DISABLE_COOKIES, config.disableCookies);
         editor.putString(KEY_PEER_PUBLIC_KEY, config.peerPublicKey);
         editor.putString(KEY_PEER_PRESHARED_KEY, config.peerPresharedKey);
         editor.putString(KEY_PEER_ALLOWED_IPS, config.peerAllowedIps);
@@ -269,6 +308,27 @@ public final class AmneziaStore {
         appendLine(builder, "I3", sharedPreferences.getString(KEY_INTERFACE_I3, ""));
         appendLine(builder, "I4", sharedPreferences.getString(KEY_INTERFACE_I4, ""));
         appendLine(builder, "I5", sharedPreferences.getString(KEY_INTERFACE_I5, ""));
+        appendLine(
+            builder,
+            "HeaderProtectionKey",
+            sharedPreferences.getString(KEY_INTERFACE_HEADER_PROTECTION_KEY, "")
+        );
+        appendLine(
+            builder,
+            "ContentPaddingAddition",
+            sharedPreferences.getString(KEY_INTERFACE_CONTENT_PADDING_ADDITION, "")
+        );
+        appendLine(builder, "RekeyAfterTime", sharedPreferences.getString(KEY_INTERFACE_REKEY_AFTER_TIME, ""));
+        appendLine(builder, "RekeyTimeout", sharedPreferences.getString(KEY_INTERFACE_REKEY_TIMEOUT, ""));
+        appendLine(builder, "RejectAfterTime", sharedPreferences.getString(KEY_INTERFACE_REJECT_AFTER_TIME, ""));
+        appendLine(builder, "KeepaliveTimeout", sharedPreferences.getString(KEY_INTERFACE_KEEPALIVE_TIMEOUT, ""));
+        appendLine(
+            builder,
+            "MaxHandshakeAttempts",
+            sharedPreferences.getString(KEY_INTERFACE_MAX_HANDSHAKE_ATTEMPTS, "")
+        );
+        appendLine(builder, "RandomTrailers", sharedPreferences.getString(KEY_INTERFACE_RANDOM_TRAILERS, ""));
+        appendLine(builder, "DisableCookies", sharedPreferences.getString(KEY_INTERFACE_DISABLE_COOKIES, ""));
         builder.append('\n').append("[Peer]\n");
         appendLine(builder, "PublicKey", sharedPreferences.getString(KEY_PEER_PUBLIC_KEY, ""));
         appendLine(builder, "PreSharedKey", sharedPreferences.getString(KEY_PEER_PRESHARED_KEY, ""));
@@ -348,6 +408,15 @@ public final class AmneziaStore {
         private String i3 = "";
         private String i4 = "";
         private String i5 = "";
+        private String headerProtectionKey = "";
+        private String contentPaddingAddition = "";
+        private String rekeyAfterTime = "";
+        private String rekeyTimeout = "";
+        private String rejectAfterTime = "";
+        private String keepaliveTimeout = "";
+        private String maxHandshakeAttempts = "";
+        private String randomTrailers = "";
+        private String disableCookies = "";
         private String peerPublicKey = "";
         private String peerPresharedKey = "";
         private String peerAllowedIps = "";

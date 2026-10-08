@@ -58,6 +58,17 @@ public final class AmneziaConfigFactory {
         ifaceBuilder.setSpecialJunkI3(iface.getSpecialJunkI3().orElse(null));
         ifaceBuilder.setSpecialJunkI4(iface.getSpecialJunkI4().orElse(null));
         ifaceBuilder.setSpecialJunkI5(iface.getSpecialJunkI5().orElse(null));
+        // AmneziaWG 3.1 obfuscation and timing parameters. setHeaderProtectionKey
+        // wraps the Key with Optional.of, so it must only be called when present.
+        iface.getHeaderProtectionKey().ifPresent(ifaceBuilder::setHeaderProtectionKey);
+        ifaceBuilder.setContentPaddingAddition(iface.getContentPaddingAddition().orElse(null));
+        ifaceBuilder.setRekeyAfterTime(iface.getRekeyAfterTime().orElse(null));
+        ifaceBuilder.setRekeyTimeout(iface.getRekeyTimeout().orElse(null));
+        ifaceBuilder.setRejectAfterTime(iface.getRejectAfterTime().orElse(null));
+        ifaceBuilder.setKeepaliveTimeout(iface.getKeepaliveTimeout().orElse(null));
+        ifaceBuilder.setMaxHandshakeAttempts(iface.getMaxHandshakeAttempts().orElse(null));
+        ifaceBuilder.setRandomTrailers(iface.getRandomTrailers().orElse(null));
+        ifaceBuilder.setDisableCookies(iface.getDisableCookies().orElse(null));
         Set<String> appRoutingPackages = AppPrefs.getEffectiveAppRoutingPackages(context);
         if (!appRoutingPackages.isEmpty()) {
             AppRoutingMode mode = AppPrefs.getAppRoutingMode(context);
